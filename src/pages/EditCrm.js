@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import {
+	StyleSheet,
+	Image,
+	View,
+	Text,
+	SafeAreaView,
+	TouchableOpacity,
+	ScrollView,
+	Platform,
+	StatusBar
+} from 'react-native';
 import { Card } from 'react-native-paper';
 import api from '../services/api.js';
 import logo from '../../assets/policia.png';
@@ -85,7 +95,7 @@ export default function EditCrm({ navigation }) {
 	// fim navigation
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<View style={styles.container}>
 			<NavigationBar
 				componentLeft={() => <ComponentLeft />}
 				componentCenter={() => <ComponentCenter />}
@@ -98,7 +108,7 @@ export default function EditCrm({ navigation }) {
 				<Text style={styles.sublabel}>Ultimos Crm Adicionados</Text>
 				<ScrollView style={styles.cardCrm}>{renderCrm()}</ScrollView>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 }
 
@@ -110,7 +120,8 @@ const styles = StyleSheet.create({
 	card: {
 		// alignSelf: 'stretch',
 		marginTop: 10,
-		backgroundColor: '#D5D5D5'
+		backgroundColor: '#D5D5D5',
+		paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
 	},
 	button: {
 		alignSelf: 'center',

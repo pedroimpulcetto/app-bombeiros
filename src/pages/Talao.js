@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, View, Text, SafeAreaView, TouchableOpacity, ScrollView, Card } from 'react-native';
+import {
+	Container,
+	StyleSheet,
+	Image,
+	View,
+	Text,
+	SafeAreaView,
+	TouchableOpacity,
+	ScrollView,
+	Button,
+	Platform,
+	StatusBar
+} from 'react-native';
+import { Card } from 'react-native-elements';
 
 import { NavigationBar } from 'navigationbar-react-native';
 import api from '../services/api.js';
@@ -33,7 +46,7 @@ export default function Talao({ navigation }) {
 		return talao.map((talao) => {
 			if (talao.data_talao == hoje) {
 				return (
-					<View style={styles.talao} key={talao.id}>
+					<TouchableOpacity style={styles.talao} key={talao.id}>
 						<Text>
 							<Text style={{ fontSize: 22, fontWeight: 'bold' }}>Horário:</Text>{' '}
 							<Text style={styles.labelTalao}>{talao.hora_chamada_talao.split('.')[0]}</Text>
@@ -54,7 +67,7 @@ export default function Talao({ navigation }) {
 							<Text style={{ fontSize: 22, fontWeight: 'bold' }}>Cmt:</Text>{' '}
 							<Text style={styles.labelTalao}>{talao.comandante_talao}</Text>
 						</Text>
-					</View>
+					</TouchableOpacity>
 				);
 			}
 		});
@@ -117,14 +130,16 @@ export default function Talao({ navigation }) {
 	// fim navigation
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<NavigationBar
-				componentLeft={() => <ComponentLeft />}
-				componentCenter={() => <ComponentCenter />}
-				componentRight={() => <ComponentRight />}
-				navigationBarStyle={{ backgroundColor: '#C2C2C2' }}
-				statusBarStyle={{ barStyle: 'light-content', backgroundColor: '#215e79' }}
-			/>
+		<View style={styles.container}>
+			<View style={{ backgroundColor: '#D5D5D5' }}>
+				<NavigationBar
+					componentLeft={() => <ComponentLeft />}
+					componentCenter={() => <ComponentCenter />}
+					componentRight={() => <ComponentRight />}
+					navigationBarStyle={{ backgroundColor: '#D5D5D5' }}
+					statusBarStyle={{ barStyle: 'light-content', color: '#215e79' }}
+				/>
+			</View>
 			<View style={{ height: '15%', marginLeft: 5, marginRight: 5, marginTop: 15 }}>
 				<View style={{ flexDirection: 'row' }}>
 					<Image source={toticon} style={{ resizeMode: 'contain', width: 50, height: 25 }} />
@@ -136,7 +151,7 @@ export default function Talao({ navigation }) {
 					<Image source={incicon} style={{ resizeMode: 'contain', width: 50, height: 25 }} />
 					<DetailTalao descricao={'Incêncido: '} valor={inc} />
 					<Image source={salvicon} style={{ resizeMode: 'contain', width: 50, height: 25 }} />
-					<DetailTalao descricao={'Salvamento: '} valor={salv} />
+					<DetailTalao descricao={'Salvam: '} valor={salv} />
 				</View>
 			</View>
 			<ScrollView style={{ height: '65%' }}>
@@ -152,7 +167,7 @@ export default function Talao({ navigation }) {
 					<Text style={{ color: 'white', alignSelf: 'center', fontSize: 18 }}>Semana</Text>
 				</TouchableOpacity>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 }
 
@@ -161,7 +176,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#C2C2C2',
 		flexDirection: 'column',
-		justifyContent: 'space-between'
+		paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
 	},
 	titulo: {
 		fontSize: 22,
@@ -186,7 +201,10 @@ const styles = StyleSheet.create({
 		marginRight: 15,
 		borderWidth: 2,
 		borderColor: '#1C1C1C',
-		padding: 5
+		paddingLeft: 20,
+		backgroundColor: '#D3D3D3',
+		borderRadius: 20,
+		padding: 10
 	},
 	labelTalao: {
 		fontSize: 18,

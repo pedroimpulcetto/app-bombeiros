@@ -1,10 +1,9 @@
 {
-  "packagerPort": 19001,
-  "packagerPid": 4484,
-  "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://9r-kxf.pedroimpulcetto.app-bombeiros.exp.direct",
-  "packagerNgrokUrl": "https://packager.9r-kxf.pedroimpulcetto.app-bombeiros.exp.direct",
-  "ngrokPid": 9860,
-  "webpackServerPort": null
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "devToolsPort": 19002,
+  "packagerPort": 19001,
+  "packagerPid": 9316
 }

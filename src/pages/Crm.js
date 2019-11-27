@@ -8,17 +8,21 @@ import {
 	ScrollView,
 	TextInput,
 	Button,
-	TouchableOpacity
+	TouchableOpacity,
+	Platform,
+	StatusBar
 } from 'react-native';
 import api from '../services/api.js';
 import { NavigationBar } from 'navigationbar-react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Crm({ navigation }) {
 	const [ num, setNum ] = useState(0);
 	const [ nome, setNome ] = useState('');
 
-	async function handleSubmit() {
+	async function handleSubmit(crm) {
+		if (crm.id) {
+			await api.put(`crm/${crm.id}`, crm);
+		}
 		await api.post('crm/', {
 			crm_crm: num,
 			nome_medico_crm: nome
@@ -66,14 +70,16 @@ export default function Crm({ navigation }) {
 	// fim navigation
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<NavigationBar
-				componentLeft={() => <ComponentLeft />}
-				componentCenter={() => <ComponentCenter />}
-				componentRight={() => <ComponentRight />}
-				navigationBarStyle={{ backgroundColor: '#C2C2C2' }}
-				statusBarStyle={{ barStyle: 'light-content', backgroundColor: '#215e79' }}
-			/>
+		<View style={styles.container}>
+			<View style={{ backgroundColor: '#D5D5D5' }}>
+				<NavigationBar
+					componentLeft={() => <ComponentLeft />}
+					componentCenter={() => <ComponentCenter />}
+					componentRight={() => <ComponentRight />}
+					navigationBarStyle={{ backgroundColor: '#D5D5D5' }}
+					statusBarStyle={{ barStyle: 'light-content', backgroundColor: '#215e79' }}
+				/>
+			</View>
 			<View style={styles.form}>
 				<Text style={styles.label}>Numero do CRM</Text>
 				<TextInput
@@ -99,14 +105,15 @@ export default function Crm({ navigation }) {
 					<Text style={{ color: 'white', fontSize: 18 }}>Adicionar</Text>
 				</TouchableOpacity>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#C2C2C2'
+		backgroundColor: '#C2C2C2',
+		paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
 	},
 	titulo: {
 		fontSize: 18,
